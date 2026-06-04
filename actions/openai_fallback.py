@@ -76,17 +76,25 @@ class ActionOpenAIFallback(Action):
         user_message: str,
         history: list[dict[str, str]],
     ) -> str:
+        from openai.types.chat import ChatCompletionMessageParam
+
         client = AsyncOpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
-        messages = [{"role": "system", "content": SYSTEM_PROMPT}]
-        messages.extend(history)
-        messages.append({"role": "user", "content": user_message})
+        raw_messages: list[ChatCompletionMessageParam] = [
+            {"role": "system", "content": SYSTEM_PROMPT},
+        ]
+        for msg in history:
+            role = msg.get("role", "user")
+            if role in ("user", "assistant", "system"):
+                raw_messages.append({"role": role, "content": msg.get("content", "")})  # type: ignore[arg-type]
+        raw_messages.append({"role": "user", "content": user_message})
 
         completion = await client.chat.completions.create(
             model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
-            messages=messages,
+            messages=raw_messages,
             max_tokens=200,
             temperature=0.7,
         )
 
-        return completion.choices[0].message.content.strip()
+        content = completion.choices[0].message.content
+        return content.strip() if content else "I'm not sure how to respond to that."
