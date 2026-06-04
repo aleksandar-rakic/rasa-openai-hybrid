@@ -40,7 +40,9 @@ class ActionOpenAIFallback(Action):
         user_message = tracker.latest_message.get("text", "")
 
         if not user_message:
-            dispatcher.utter_message(text="I didn't quite catch that. Could you rephrase?")
+            dispatcher.utter_message(
+                text="I didn't quite catch that. Could you rephrase?"
+            )
             return []
 
         conversation_history = self._build_history(tracker)
