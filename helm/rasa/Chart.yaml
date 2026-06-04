@@ -1,0 +1,17 @@
+apiVersion: v2
+name: rasa-openai-hybrid
+description: RASA + OpenAI hybrid chatbot Helm chart
+type: application
+version: 1.0.0
+appVersion: "3.6.21"
+
+keywords:
+  - rasa
+  - chatbot
+  - nlp
+  - openai
+  - kubernetes
+
+maintainers:
+  - name: Aleksandar Rakić
+    url: https://github.com/aleksandar-rakic

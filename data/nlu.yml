@@ -1,0 +1,64 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hey
+      - hello
+      - hi
+      - good morning
+      - good evening
+      - hey there
+      - hello there
+
+  - intent: goodbye
+    examples: |
+      - bye
+      - goodbye
+      - see you
+      - see you around
+      - take care
+      - good night
+
+  - intent: ask_pricing
+    examples: |
+      - how much does it cost
+      - what are your prices
+      - pricing plans
+      - how much is the pro plan
+      - what does [enterprise](plan) cost
+      - I want to know about [starter](plan) pricing
+      - can you tell me about your plans
+
+  - intent: ask_features
+    examples: |
+      - what features do you have
+      - what can your product do
+      - tell me about your features
+      - what does your platform offer
+      - what are the capabilities
+
+  - intent: report_bug
+    examples: |
+      - I found a bug
+      - something is not working
+      - the app is broken
+      - I'm getting an error
+      - it's not working properly
+      - there's an issue with [dashboard](product)
+      - [login](product) is not working
+
+  - intent: request_human
+    examples: |
+      - I want to talk to a human
+      - can I speak to an agent
+      - connect me with support
+      - I need a real person
+      - get me a human
+
+  - intent: out_of_scope
+    examples: |
+      - I want to order pizza
+      - what's the weather like
+      - who is the president
+      - tell me a joke

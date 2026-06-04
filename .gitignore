@@ -1,0 +1,13 @@
+.rasa/
+models/
+results/
+__pycache__/
+*.pyc
+*.pyo
+.env
+.env.*
+!.env.example
+*.egg-info/
+dist/
+.mypy_cache/
+.ruff_cache/

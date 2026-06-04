@@ -1,0 +1,40 @@
+services:
+  rasa:
+    image: rasa/rasa:3.6.21
+    ports:
+      - "5005:5005"
+    volumes:
+      - .:/app
+    command: run --enable-api --cors "*" --debug
+    environment:
+      RASA_TELEMETRY_ENABLED: "false"
+    depends_on:
+      - actions
+    networks:
+      - rasa
+
+  actions:
+    build:
+      context: .
+      dockerfile: Dockerfile.actions
+    ports:
+      - "5055:5055"
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+    networks:
+      - rasa
+
+  trainer:
+    image: rasa/rasa:3.6.21
+    volumes:
+      - .:/app
+    command: train --domain domain.yml --data data/ --config config.yml --out models/
+    profiles:
+      - train
+    networks:
+      - rasa
+
+networks:
+  rasa:
+    driver: bridge

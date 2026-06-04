@@ -1,0 +1,66 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - ask_pricing
+  - ask_features
+  - report_bug
+  - request_human
+  - out_of_scope
+
+entities:
+  - product
+  - plan
+
+slots:
+  conversation_id:
+    type: text
+    mappings:
+      - type: custom
+  openai_response:
+    type: text
+    mappings:
+      - type: custom
+
+responses:
+  utter_greet:
+    - text: "Hey! How can I help you today?"
+    - text: "Hi there! What can I do for you?"
+
+  utter_goodbye:
+    - text: "Goodbye! Have a great day."
+
+  utter_affirm:
+    - text: "Great, let me help you with that."
+
+  utter_ask_pricing:
+    - text: "We offer three plans: Starter ($29/mo), Pro ($79/mo), and Enterprise (custom). Which would you like to know more about?"
+
+  utter_ask_features:
+    - text: "Our platform offers real-time analytics, automated workflows, and 99.9% uptime SLA. Want details on any specific feature?"
+
+  utter_transfer_to_human:
+    - text: "I'm connecting you with a human agent. Please wait a moment."
+
+  utter_openai_fallback:
+    - text: "{openai_response}"
+
+  utter_default:
+    - text: "I'm not sure I understood that. Could you rephrase?"
+
+actions:
+  - action_openai_fallback
+  - action_transfer_to_human
+  - validate_support_form
+
+forms:
+  support_form:
+    required_slots:
+      - conversation_id
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
