@@ -86,7 +86,7 @@ class ActionOpenAIFallback(Action):
         for msg in history:
             role = msg.get("role", "user")
             if role in ("user", "assistant", "system"):
-                raw_messages.append({"role": role, "content": msg.get("content", "")})  # type: ignore[arg-type]
+                raw_messages.append({"role": role, "content": msg.get("content", "")})  # type: ignore[misc]
         raw_messages.append({"role": "user", "content": user_message})
 
         completion = await client.chat.completions.create(
